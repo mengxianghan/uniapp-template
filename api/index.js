@@ -20,6 +20,6 @@ const registerApi = (req) => {
     })
 }
 
-registerApi(require.context('.', true, /[A-Za-z]+\.(js)$/))
+registerApi(require.context('./modules', true, /[A-Za-z]+\.(js)$/))
 
 export default api
