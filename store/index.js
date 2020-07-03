@@ -6,8 +6,9 @@ Vue.use(Vuex)
 
 //自动化引入modules
 const modules = {}
-const registerApi = (req) => {
-    req.keys().forEach(filename => {
+require.context('./modules/', false, /[A-Za-z]+\.(js)$/)
+    .keys()
+    .forEach(filename => {
         const name = filename.replace(/^\.\/(.*)\.\w+$/, '$1')
         if (name === 'index') return
         const options = () => {
@@ -16,9 +17,6 @@ const registerApi = (req) => {
         }
         modules[name] = options()
     })
-}
-
-registerApi(require.context('./modules/', false, /[A-Za-z]+\.(js)$/))
 
 const store = new Vuex.Store({
     getters,
