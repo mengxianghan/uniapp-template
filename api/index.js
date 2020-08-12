@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 let api = {}
-const registerApi = (req) => {
+const register = (req) => {
     req.keys().forEach(filename => {
         const name = filename.replace(/^\.\/(.*)\.\w+$/, '$1')
         if (name === 'index') return
@@ -20,6 +20,6 @@ const registerApi = (req) => {
     })
 }
 
-registerApi(require.context('./modules', true, /[A-Za-z]+\.(js)$/))
+register(require.context('./modules', true, /[A-Za-z]+\.(js)$/))
 
 export default api
