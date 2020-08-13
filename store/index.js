@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 //自动化引入modules
 const modules = {}
-
 const register = (req) => {
     req.keys().forEach(filename => {
         const name = filename.replace(/^\.\/(.*)\.\w+$/, '$1')

@@ -17,7 +17,7 @@ const Fly = require("flyio/dist/npm/wx")
 const fly = new Fly()
 
 // 请求拦截器
-fly.interceptors.request.use((request) => {
+fly.interceptors.request.use(request => {
     const isLogin = store.getters.isLogin;
     const userInfo = store.getters.userInfo;
     const token = store.getters.token;
@@ -37,33 +37,30 @@ fly.interceptors.request.use((request) => {
 });
 
 // 响应拦截器
-fly.interceptors.response.use(
-    (response) => {
-        if (response.data) {
-            if (response.data instanceof String) {
-                response.data = JSON.parse(response.data)
-            }
-            // #ifdef H5
-            //response.data = JSON.parse(response.data);
-            // #endif
-            if (!response.data.IsSuccess && response.data.Message) {
-                wx.showToast({
-                    title: `${response.data.Message}`,
-                    icon: 'none'
-                });
-            }
+fly.interceptors.response.use(response => {
+    if (response.data) {
+        if (response.data instanceof String) {
+            response.data = JSON.parse(response.data)
         }
-        return response;
-    },
-    (err) => {
-        const title = err.response && err.response.data ? (err.response.data.Message || '系统异常！请稍后再再试') :
-            '系统异常！请稍后再再试';
-        wx.showToast({
-            title: title,
-            icon: 'none'
-        });
+        // #ifdef H5
+        //response.data = JSON.parse(response.data);
+        // #endif
+        if (!response.data.IsSuccess && response.data.Message) {
+            wx.showToast({
+                title: `${response.data.Message}`,
+                icon: 'none'
+            });
+        }
     }
-);
+    return response;
+}, err => {
+    const title = err.response && err.response.data ? (err.response.data.Message || '系统异常！请稍后再再试') :
+        '系统异常！请稍后再再试';
+    wx.showToast({
+        title: title,
+        icon: 'none'
+    });
+});
 
 class Http {
     constructor(options = {}) {

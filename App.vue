@@ -1,17 +1,43 @@
 <script>
-export default {
-    onLaunch: function() {
-        // console.log('App Launch')
-    },
-    onShow: function() {
-        // console.log('App Show')
-    },
-    onHide: function() {
-        // console.log('App Hide')
+    export default {
+        onLaunch: function() {
+            this.checkUpdate()
+        },
+        onShow: function() {},
+        onHide: function() {},
+        // 检查更新
+        checkUpdate() {
+            // #ifdef MP
+            if (uni.canIUse('getUpdateManager')) {
+                const updateManager = wx.getUpdateManager();
+
+                updateManager.onCheckForUpdate(function(res) {
+                    // 请求完新版本信息的回调
+                });
+
+                updateManager.onUpdateReady(function() {
+                    uni.showModal({
+                        title: '更新提示',
+                        content: '新版本已经准备好，是否重启应用？',
+                        success: function(res) {
+                            if (res.confirm) {
+                                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                                updateManager.applyUpdate();
+                            }
+                        }
+                    });
+                });
+
+                updateManager.onUpdateFailed(function() {
+                    // 新版本下载失败
+                });
+            }
+            // #endif
+        }
     }
-};
 </script>
 
 <style lang="scss">
-@import './public/style/app.scss';
+    /*每个页面公共css */
+    @import './static/style/app.scss'
 </style>
