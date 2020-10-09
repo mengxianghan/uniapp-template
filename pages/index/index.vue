@@ -1,7 +1,6 @@
 <template>
     <view>
         <view>欢迎使用uniapp-template</view>
-        
     </view>
 </template>
 
