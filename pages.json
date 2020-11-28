@@ -5,12 +5,22 @@
             "style": {
                 "navigationBarTitleText": "uniapp 模板"
             }
+        }, {
+            "path": "pages/user/login/index",
+            "style": {
+                "navigationBarTitleText": "用户登录",
+                "enablePullDownRefresh": false
+            }
+
         }
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "uniapp 模板",
         "navigationBarBackgroundColor": "#F8F8F8",
-        "backgroundColor": "#F8F8F8"
+        "backgroundColor": "#F8F8F8",
+        "h5": {
+            "titleNView": false
+        }
     }
 }

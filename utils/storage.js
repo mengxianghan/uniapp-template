@@ -1,5 +1,5 @@
 const storage = {}
-const storageMap = ['isLogin', 'userInfo']
+const storageMap = ['isLogin', 'userInfo', 'token']
 
 storageMap.forEach((item, index) => {
     let name = item.charAt(0).toUpperCase() + item.slice(1)

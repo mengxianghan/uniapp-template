@@ -1,11 +1,14 @@
 <script>
-    export default {
-        onLaunch: function() {
-            this.checkUpdate()
-        },
-        onShow: function() {},
-        onHide: function() {},
-        // 检查更新
+export default {
+    onLaunch() {
+        this.checkUpdate();
+    },
+    onShow() {},
+    onHide() {},
+    methods: {
+        /**
+         * 检查更新
+         */
         checkUpdate() {
             // #ifdef MP
             if (uni.canIUse('getUpdateManager')) {
@@ -35,9 +38,10 @@
             // #endif
         }
     }
+};
 </script>
 
 <style lang="scss">
-    /*每个页面公共css */
-    @import './static/style/app.scss'
+/*每个页面公共css */
+@import './static/style/app.scss';
 </style>

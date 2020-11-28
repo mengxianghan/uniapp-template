@@ -1,4 +1,6 @@
-import _ from 'lodash'
+import {
+    merge
+} from 'lodash'
 
 let api = {}
 const register = (req) => {
@@ -11,11 +13,17 @@ const register = (req) => {
         let data
         let nameArr = name.split('/')
         if (nameArr.length > 1) {
-            data = name.split('/').reduceRight((accumulator, currentValue) => ({[currentValue]: {[accumulator]: options()}}))
+            data = name.split('/').reduceRight((accumulator, currentValue) => ({
+                [currentValue]: {
+                    [accumulator]: options()
+                }
+            }))
         } else {
-            data = {[name]: options()}
+            data = {
+                [name]: options()
+            }
         }
-        api = _.merge(api, data)
+        api = merge(api, data)
     })
 }
 

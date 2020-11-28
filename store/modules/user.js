@@ -2,7 +2,8 @@ import storage from '@/utils/storage.js'
 
 const state = {
     isLogin: storage.getIsLogin() || false,
-    userInfo: storage.getUserInfo() || {}
+    userInfo: storage.getUserInfo() || {},
+    token: storage.getToken() || ''
 }
 
 const mutations = {
@@ -19,6 +20,13 @@ const mutations = {
     SET_USER_INFO(state, userInfo = {}) {
         state.userInfo = userInfo
         storage.setUserInfo(userInfo)
+    },
+    /**
+     * 设置token
+     */
+    SET_TOKEN(state,token=''){
+        state.token = token
+        storage.setToken(token)
     }
 }
 
@@ -29,6 +37,9 @@ const actions = {
     login({ commit }, payload) {
 
     },
+    /**
+     * 退出登录
+     */
     logout({ commit }) {
 
     }

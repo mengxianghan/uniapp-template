@@ -7,7 +7,7 @@ const Fly = require('flyio/dist/npm/fly')
 // #endif
 
 // #ifdef MP-ALIPAY
-const Fly = require("flyio/dist/npm/ap")
+const Fly = require("flyio/dist/npm/app")
 // #endif
 
 // #ifdef MP-WEIXIN || APP-PLUS
@@ -21,16 +21,10 @@ fly.interceptors.request.use(request => {
     const isLogin = store.getters.isLogin;
     const userInfo = store.getters.userInfo;
     const token = store.getters.token;
-
-    // post 方式发送数据，添加额外参数
-    if (request.method.toLowerCase() == 'post') {
-        if (isLogin) {
-            request.body = {
-                ...request.body,
-                Token: token,
-                UserId: userInfo.userId
-            }
-        }
+    
+    // 已登录
+    if(isLogin){
+        request.headers['AUTH-TOKEN'] = `Bearer ${token}`
     }
 
     return request;
@@ -38,26 +32,26 @@ fly.interceptors.request.use(request => {
 
 // 响应拦截器
 fly.interceptors.response.use(response => {
-    if (response.data) {
-        if (response.data instanceof String) {
-            response.data = JSON.parse(response.data)
+    const {data} = response
+    if (data) {
+        if (data instanceof String) {
+            data = JSON.parse(data)
         }
-        // #ifdef H5
-        //response.data = JSON.parse(response.data);
-        // #endif
-        if (!response.data.IsSuccess && response.data.Message) {
-            wx.showToast({
-                title: `${response.data.Message}`,
-                icon: 'none'
-            });
+        const {code,msg} = data
+        
+        if(!['200'].includes(code)){
+            if(msg){
+                wx.showToast({
+                    title: `${msg}`,
+                    icon: 'none'
+                });
+            }
         }
     }
     return response;
 }, err => {
-    const title = err.response && err.response.data ? (err.response.data.Message || '系统异常！请稍后再再试') :
-        '系统异常！请稍后再再试';
     wx.showToast({
-        title: title,
+        title: err?.response?.data?.msg ?? '系统异常，请稍后再试!',
         icon: 'none'
     });
 });
@@ -147,7 +141,7 @@ class Http {
 class Api extends Http {
     constructor(getway = '') {
         super({
-            baseURL: `${config.baseUrl}${getway}`
+            baseURL: `${config.api}${getway}`
         })
     }
 }

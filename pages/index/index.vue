@@ -1,7 +1,7 @@
 <template>
-    <view>
+    <container>
         <view>欢迎使用uniapp-template</view>
-    </view>
+    </container>
 </template>
 
 <script>
