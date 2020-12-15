@@ -1,5 +1,5 @@
-import qs from 'qs'
-import store from '@/store/index.js';
+import { merge } from 'lodash'
+import store from '@/store/index.js'
 import config from '@/config.js'
 
 // #ifdef H5
@@ -21,9 +21,9 @@ fly.interceptors.request.use(request => {
     const isLogin = store.getters.isLogin;
     const userInfo = store.getters.userInfo;
     const token = store.getters.token;
-    
+
     // 已登录
-    if(isLogin){
+    if (isLogin) {
         request.headers['AUTH-TOKEN'] = `Bearer ${token}`
     }
 
@@ -32,15 +32,15 @@ fly.interceptors.request.use(request => {
 
 // 响应拦截器
 fly.interceptors.response.use(response => {
-    const {data} = response
+    const { data } = response
     if (data) {
         if (data instanceof String) {
             data = JSON.parse(data)
         }
-        const {code,msg} = data
-        
-        if(!['200'].includes(code)){
-            if(msg){
+        const { code, msg } = data
+
+        if (!['200'].includes(code)) {
+            if (msg) {
                 wx.showToast({
                     title: `${msg}`,
                     icon: 'none'
@@ -51,7 +51,7 @@ fly.interceptors.response.use(response => {
     return response;
 }, err => {
     wx.showToast({
-        title: err?.response?.data?.msg ?? '系统异常，请稍后再试!',
+        title: err ? .response ? .data ? .msg ? ? '系统异常，请稍后再试!',
         icon: 'none'
     });
 });
@@ -59,12 +59,11 @@ fly.interceptors.response.use(response => {
 class Http {
     constructor(options = {}) {
         this.baseURL = options.baseURL
-        this.config = {
+        this.config = merge({
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
-            },
-            ...options
-        }
+            }
+        }, options)
     }
 
     request(url = '', params = {}, options) {
