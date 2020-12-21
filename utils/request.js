@@ -51,7 +51,7 @@ fly.interceptors.response.use(response => {
     return response;
 }, err => {
     wx.showToast({
-        title: err ? .response ? .data ? .msg ? ? '系统异常，请稍后再试!',
+        title: err ?. response ?. data ?. msg ?? '系统异常，请稍后再试!',
         icon: 'none'
     });
 });

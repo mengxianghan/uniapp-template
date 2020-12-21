@@ -7,7 +7,7 @@ export default {
     props: {
         background: {
             type: String,
-            default: '#fff'
+            default: ''
         }
     },
     data() {

@@ -11,69 +11,46 @@
  *
  * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
  */
+@import 'uview-ui/theme.scss';
 
-/* 颜色变量 */
+/* Color Palette */
+$uni-color-blue: #007aff;
+$uni-color-green: #4cd964;
+$uni-color-origin: #f0ad4e;
+$uni-color-red: #dd524d;
 
-/* 行为相关颜色 */
-$uni-color-primary: #007aff;
-$uni-color-success: #4cd964;
-$uni-color-warning: #f0ad4e;
-$uni-color-error: #dd524d;
-
-/* 文字基本颜色 */
-$uni-text-color: #333; //基本色
-$uni-text-color-inverse: #fff; //反色
-$uni-text-color-grey: #999; //辅助灰色，如加载更多的提示信息
-$uni-text-color-placeholder: #808080;
-$uni-text-color-disable: #c0c0c0;
-
-/* 背景颜色 */
-$uni-bg-color: #ffffff;
-$uni-bg-color-grey: #f8f8f8;
-$uni-bg-color-hover: #f1f1f1; //点击状态颜色
-$uni-bg-color-mask: rgba(0, 0, 0, 0.4); //遮罩颜色
-
-/* 边框颜色 */
+/* Border */
+$uni-border-radius: 8rpx;
+$uni-border-radius-sm: 4rpx;
+$uni-border-radius-md: 12rpx;
+$uni-border-radius-lg: 16rpx;
+$uni-border-radius-circle: 10em;
+$uni-border-radius-square: 0;
 $uni-border-color: #c8c7cc;
 
-/* 尺寸变量 */
+/* Color */
+$uni-color-primary: $uni-color-blue;
+$uni-color-success: $uni-color-green;
+$uni-color-warning: $uni-color-origin;
+$uni-color-error: $uni-color-red;
 
-/* 文字尺寸 */
+/* Font */
+$uni-font-size: 28rpx;
 $uni-font-size-sm: 24rpx;
-$uni-font-size-base: 28rpx;
-$uni-font-size-lg: 32rpx;
-
-/* 图片尺寸 */
-$uni-img-size-sm: 40rpx;
-$uni-img-size-base: 52rpx;
-$uni-img-size-lg: 80rpx;
-
-/* Border Radius */
-$uni-border-radius-sm: 4rpx;
-$uni-border-radius-base: 6rpx;
-$uni-border-radius-lg: 12rpx;
-$uni-border-radius-circle: 50%;
-
-/* 水平间距 */
-$uni-spacing-row-sm: 10px;
-$uni-spacing-row-base: 20rpx;
-$uni-spacing-row-lg: 30rpx;
-
-/* 垂直间距 */
-$uni-spacing-col-sm: 8rpx;
-$uni-spacing-col-base: 16rpx;
-$uni-spacing-col-lg: 24rpx;
-
-/* 透明度 */
-$uni-opacity-disabled: 0.3; // 组件禁用态的透明度
-
-/* 文章场景相关 */
-$uni-color-title: #2c405a; // 文章标题颜色
-$uni-font-size-title: 40rpx;
-$uni-color-subtitle: #555555; // 二级标题颜色
-$uni-font-size-subtitle: 36rpx;
-$uni-color-paragraph: #3f536e; // 文章段落颜色
-$uni-font-size-paragraph: 30rpx;
-
-/* 字体 */
+$uni-font-size-md: 32rpx;
+$uni-font-size-lg: 36rpx;
 $uni-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+
+/* Spacing */
+$uni-spacing: 8rpx;
+$uni-spacing-sm: 4rpx;
+$uni-spacing-md: 12rpx;
+$uni-spacing-lg: 16rpx;
+
+/* Text Color */
+$uni-text-color: rgba(0,0,0,.65);
+$uni-text-color-heading: rgba(0,0,0,.85);
+$uni-text-color-secondary: rgba(0,0,0,.45);
+$uni-text-color-placeholder: rgba(0,0,0,.25);
+$uni-text-color-placeholder: #808080;
+$uni-text-color-disable: rgba(0,0,0,.45);
