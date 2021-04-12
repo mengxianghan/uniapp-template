@@ -1,8 +1,11 @@
 *,
 page {
-    font: normal normal normal 28rpx/1 $uni-font-family;
+    // font: normal normal normal 28rpx/1 $uni-font-family;
+    font-family: $uni-font-family;
+    font-size: 28rpx;
 }
 
-uni-page-body{
+page,
+uni-page-body {
     height: 100%;
 }

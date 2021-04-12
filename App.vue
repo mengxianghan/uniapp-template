@@ -12,7 +12,7 @@
             checkUpdate() {
                 // #ifdef MP
                 if (uni.canIUse('getUpdateManager')) {
-                    const updateManager = wx.getUpdateManager();
+                    const updateManager = uni.getUpdateManager();
 
                     updateManager.onCheckForUpdate(function(res) {
                         // 请求完新版本信息的回调
@@ -43,6 +43,5 @@
 
 <style lang="scss">
     /*每个页面公共css */
-    @import 'uview-ui/index.scss';
     @import './static/style/app.scss';
 </style>

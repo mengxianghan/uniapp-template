@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dayjs": "^1.10.4",
     "flyio": "^0.6.14",
-    "lodash": "^4.17.15",
-    "uview-ui": "^1.8.2",
+    "lodash": "^4.17.21",
     "vuex": "^3.4.0"
   }
 }
