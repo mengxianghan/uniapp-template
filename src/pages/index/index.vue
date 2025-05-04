@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -8,8 +7,6 @@
     <view>
       欢迎使用 uniapp template
     </view>
-
-    <view>{{ data }}</view>
   </view>
 </template>
 
