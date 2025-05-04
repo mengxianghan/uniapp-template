@@ -73,6 +73,7 @@
     "pinia": "2.3.1",
     "uni-vant-http": "^1.0.0",
     "uni-vant-router": "^1.0.1",
+    "uni-vant-storage": "^1.0.0",
     "vue": "3.4.21",
     "vue-i18n": "^9.1.9"
   },
