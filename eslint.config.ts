@@ -7,6 +7,7 @@ export default antfu({
     './scripts/*',
   ],
   formatters: {
+    css: true,
     prettierOptions: {
       tabWidth: 2,
       singleQuote: true,
