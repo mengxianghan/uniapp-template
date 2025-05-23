@@ -4,13 +4,15 @@
     {
       "path": "pages/index/index",
       "style": {
+        // #ifdef H5
         "navigationStyle": "custom"
+        // #endif
       }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uniapp template",
+    "navigationBarTitleText": "UniappTemplate",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   }
