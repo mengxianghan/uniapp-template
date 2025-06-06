@@ -1,4 +1,4 @@
-import { get, isEqual } from 'lodash-es'
+import { get, includes, isEqual } from 'lodash-es'
 
 class Config {
   #configs: Record<string, any> = {}
@@ -21,14 +21,12 @@ class Config {
     return get(this.#configs, key, undefined)
   }
 
-  with(key: any) {
-    this.#value = this.get(key)
-
-    return this
-  }
-
   isEqual(value: any) {
     return isEqual(this.#value, value)
+  }
+
+  includes(key: any, value: any) {
+    return includes(this.get(key), value)
   }
 }
 
