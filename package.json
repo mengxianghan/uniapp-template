@@ -42,7 +42,7 @@
     "upload:mp-weixin:test": "cross-env APP_ENV=test node scripts/mp-weixin/upload.js",
     "upload:mp-weixin:pre": "cross-env APP_ENV=pre node scripts/mp-weixin/upload.js",
     "upload:mp-weixin:prod": "cross-env APP_ENV=prod node scripts/mp-weixin/upload.js",
-    "build:test": "pnpm run build:mp-weixin:test && pnpm run upload:mp-weixin:test",
+    "build:test": "pnpm run build:mp-weixin:test && pnpm run preview:mp-weixin:test",
     "build:pre": "pnpm run build:mp-weixin:pre && pnpm run upload:mp-weixin:pre",
     "build:prod": "pnpm run build:mp-weixin:prod && pnpm run upload:mp-weixin:prod",
     "type-check": "vue-tsc --noEmit",

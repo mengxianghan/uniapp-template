@@ -4,7 +4,7 @@ export default antfu({
   ignores: [
     '**/node_modules/*',
     './src/env.d.ts',
-    './scripts/*',
+    './scripts/*.key',
   ],
   formatters: {
     css: true,

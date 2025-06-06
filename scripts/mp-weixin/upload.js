@@ -1,12 +1,13 @@
+const process = require('node:process')
 const consola = require('consola')
-const {ci, project, baseSetting} = require('./config')
-const {log} = require('./log')
-const {version} = require('../utils')
+const { version } = require('../utils')
+const { ci, project, baseSetting } = require('./config')
+const { log } = require('./log')
 
 consola.start('正在上传…')
 ci.upload({
   project,
-  version: version,
+  version,
   desc: `环境：${process.env.APP_ENV}；版本：v${version}`,
   setting: {
     ...baseSetting,
