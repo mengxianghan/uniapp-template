@@ -1,5 +1,5 @@
-import { useCore } from '@/core'
 import { createSSRApp } from 'vue'
+import { useCore } from '@/core'
 import App from './App.vue'
 
 export function createApp() {

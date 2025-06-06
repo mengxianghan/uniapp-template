@@ -1,7 +1,7 @@
 const fs = require('node:fs')
 const pkg = require('../package.json')
 
-const readJsonAsync = (path) => {
+function readJsonAsync(path) {
   return JSON.parse(fs.readFileSync(path, 'utf-8')
     // 过滤 json 文件中的注释
     .replace(/^\s*\/\/.*$/gm, '')
