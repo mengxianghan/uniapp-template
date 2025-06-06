@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import process from 'node:process'
+import { addIconSelectors } from '@iconify/tailwind'
 import rem2px from 'tailwindcss-rem-to-px'
 
 export default <Config>{
@@ -14,6 +15,9 @@ export default <Config>{
     rem2px({
       baseFontSize: 16,
     }),
+    addIconSelectors([
+      'tdesign',
+    ]),
   ],
   corePlugins: {
     // 小程序不需要 preflight 样式，如果需要兼容 H5，需要使用环境变量控制

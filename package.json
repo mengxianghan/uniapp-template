@@ -87,6 +87,8 @@
     "@dcloudio/uni-stacktracey": "3.0.0-4030620241128001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4030620241128001",
     "@dcloudio/vue-cli-plugin-uni": "2.0.2-4060620250520001",
+    "@iconify-json/tdesign": "^1.2.8",
+    "@iconify/tailwind": "^1.2.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.15.17",
     "@uni-helper/uni-app-types": "1.0.0-alpha.6",
