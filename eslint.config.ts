@@ -27,5 +27,6 @@ export default antfu({
       },
     ],
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
+    'vue/custom-event-name-casing': ['error', 'kebab-case'],
   },
 })
