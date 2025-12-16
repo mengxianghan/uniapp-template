@@ -2,7 +2,7 @@ const process = require('node:process')
 const consola = require('consola')
 const { version } = require('../utils.js')
 const { ci, project, baseSetting } = require('./config')
-const { log } = require('./log')
+const { log, onProgressUpdate } = require('./utils')
 
 consola.start('正在生成预览…')
 ci.preview({
@@ -15,7 +15,7 @@ ci.preview({
   qrcodeOutputDest: `./dist/destination.jpg`,
   pagePath: 'pages/home/index',
   robot: 1,
-  onProgressUpdate: console.log,
+  onProgressUpdate,
 }).then((result) => {
   log(result)
   consola.success(`预览成功`)

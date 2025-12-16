@@ -26,6 +26,19 @@ function log(result) {
   }
 }
 
+function onProgressUpdate(task) {
+  const status = {
+    doing: 'start',
+    done: 'success',
+    fail: 'fail',
+    warn: 'warn',
+    info: 'info',
+  }
+
+  consola[status[task.status]](`[${task.id}] ${task.message}`)
+}
+
 module.exports = {
   log,
+  onProgressUpdate,
 }

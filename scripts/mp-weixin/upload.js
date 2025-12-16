@@ -2,7 +2,7 @@ const process = require('node:process')
 const consola = require('consola')
 const { version } = require('../utils')
 const { ci, project, baseSetting } = require('./config')
-const { log } = require('./log')
+const { log, onProgressUpdate } = require('./utils')
 
 consola.start('正在上传…')
 ci.upload({
@@ -12,7 +12,7 @@ ci.upload({
   setting: {
     ...baseSetting,
   },
-  onProgressUpdate: console.log,
+  onProgressUpdate,
   robot: 1,
 }).then((result) => {
   log(result)
