@@ -5,6 +5,7 @@ export default antfu({
     '**/node_modules/*',
     './src/env.d.ts',
     './scripts/*.key',
+    './src/static/',
   ],
   formatters: {
     css: true,
