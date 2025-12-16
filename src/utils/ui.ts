@@ -13,7 +13,7 @@ export const hideToast = uni.hideToast
 export function showModal(options: UniApp.ShowModalOptions | string) {
   options = typeof options === 'string' ? { content: options } : options
   uni.showModal({
-    confirmColor: '#FF8484',
+    // confirmColor: '#FF8484',
     ...options,
   })
 }

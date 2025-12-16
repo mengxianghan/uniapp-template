@@ -53,6 +53,9 @@ importers:
       '@dcloudio/uni-quickapp-webview':
         specifier: 3.0.0-4030620241128001
         version: 3.0.0-4030620241128001(postcss@8.5.6)(rollup@4.52.5)(vue@3.4.21(typescript@5.9.3))
+      '@iconify-json/weui':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@uni-helper/axios-adapter':
         specifier: ^1.5.2
         version: 1.5.2(axios@1.5.1)
@@ -65,6 +68,9 @@ importers:
       pinia:
         specifier: 2.3.1
         version: 2.3.1(typescript@5.9.3)(vue@3.4.21(typescript@5.9.3))
+      tailwind-merge:
+        specifier: ~3.4.0
+        version: 3.4.0
       uni-vant-http:
         specifier: ^1.0.2
         version: 1.0.4
@@ -2186,6 +2192,9 @@ packages:
 
   '@iconify-json/tdesign@1.2.10':
     resolution: {integrity: sha512-qt96LW9buYHGjRZsXla5SVFwDX9d11K0iEjgYoNm2EfL9Rh6yGvCN5h9XnejAK4mvmpI/Q1JM+IEyXXlBhigkg==}
+
+  '@iconify-json/weui@1.2.4':
+    resolution: {integrity: sha512-11WOzuH81FokN34N2WYg/bRQ+5ewrIrzVfN4RhWxj3Xr37/eYmqb5SeC6EXpmH8yi+d8tLBdmPxbF41bIhrdxg==}
 
   '@iconify/tailwind@1.2.0':
     resolution: {integrity: sha512-KgpIHWOTcRYw1XcoUqyNSrmYyfLLqZYu3AmP8zdfLk0F5TqRO8YerhlvlQmGfn7rJXgPeZN569xPAJnJ53zZxA==}
@@ -8451,6 +8460,9 @@ packages:
   systemjs@6.15.1:
     resolution: {integrity: sha512-Nk8c4lXvMB98MtbmjX7JwJRgJOL8fluecYCfCeYBznwmpOs8Bf15hLM6z4z71EDAhQVrQrI+wt1aLWSXZq+hXA==}
 
+  tailwind-merge@3.4.0:
+    resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
+
   tailwindcss-config@1.1.2:
     resolution: {integrity: sha512-5vpQ7+B2pQAw4q8p4rXrHMMAhJ6sJ02C8lU8FRYCSUTVp7xDV+Ocz1IJGfWxTnyMW18GN2Elc/QefHfqiKVEQw==}
 
@@ -12044,6 +12056,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-json/tdesign@1.2.10':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/weui@1.2.4':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -19732,6 +19748,8 @@ snapshots:
       tslib: 2.8.1
 
   systemjs@6.15.1: {}
+
+  tailwind-merge@3.4.0: {}
 
   tailwindcss-config@1.1.2:
     dependencies:

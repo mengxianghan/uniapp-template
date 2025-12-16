@@ -14,3 +14,15 @@ export function switchTabToIndex() {
     path: '/pages/index/index',
   })
 }
+
+export function navigateToLogin() {
+  router.navigateTo({
+    path: '/pages/user/login/index',
+  })
+}
+
+export function navigateToUserInfo() {
+  router.navigateTo({
+    path: '/pages/user/info/index',
+  })
+}

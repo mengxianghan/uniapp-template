@@ -1,6 +1,4 @@
 // eslint-disable-next-line ts/no-require-imports
-const mqtt = require('../static/mqtt.min')
+const mqtt = require('../static/libs/mqtt.min')
 
-export {
-  mqtt,
-}
+export default mqtt

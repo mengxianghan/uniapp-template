@@ -17,6 +17,7 @@ export default <Config>{
     }),
     addIconSelectors([
       'tdesign',
+      'weui',
     ]),
   ],
   corePlugins: {
