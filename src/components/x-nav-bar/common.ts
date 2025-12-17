@@ -1,9 +1,8 @@
 export interface NavBarProps {
-  customClass?: string
+  customClass?: string | Record<string, any>
+  customStyle?: string | Record<string, any>
   title?: string
-  leftArrow?: boolean
-  leftText?: string
-  leftArrowClass?: string
+  showBack?: boolean
   leftClass?: string
   titleClass?: string
   fixed?: boolean
@@ -11,5 +10,5 @@ export interface NavBarProps {
 }
 
 export interface NavBarEmits {
-  (e: 'click-left'): void
+  (e: 'click-back'): void
 }

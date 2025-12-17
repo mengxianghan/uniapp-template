@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NavBarEmits, NavBarProps } from './common'
+import { normalizeStyle } from 'vue'
 import { computed, type CSSProperties, useSlots } from 'vue'
 import { clsx, getMenuButtonBoundingClientRect, getSystemInfo } from '@/utils'
 
@@ -18,11 +19,11 @@ const slots = useSlots()
 
 const pages = getCurrentPages()
 
-// const paddingHorizontal = computed(() => {
-//   const { windowWidth = 0 } = getSystemInfo()
-//   const { left, width } = getMenuButtonBoundingClientRect()
-//   return windowWidth - left - width
-// })
+const paddingHorizontal = computed(() => {
+  const { windowWidth = 0 } = getSystemInfo()
+  const { left, width } = getMenuButtonBoundingClientRect()
+  return windowWidth - left - width
+})
 
 const navbarHeight = computed<number>(() => {
   const { statusBarHeight = 0 } = getSystemInfo()
@@ -56,21 +57,21 @@ const navbarInnerStyle = computed(() => {
   return style
 })
 
-// const leftStyle = computed(() => {
-//   const style: CSSProperties = {
-//     paddingLeft: `${paddingHorizontal.value}px`,
-//     paddingRight: `${paddingHorizontal.value}px`,
-//   }
-//
-//   return style
-// })
+const leftStyle = computed(() => {
+  const style: CSSProperties = {
+    paddingLeft: `${paddingHorizontal.value}px`,
+    paddingRight: `${paddingHorizontal.value}px`,
+  }
 
-const showLeft = computed(() => slots.left || props.leftArrow)
+  return style
+})
+
+const showLeft = computed(() => slots.left || props.showBack)
 
 const showTitle = computed(() => slots.title || props.title)
 
-function handleLeft() {
-  emit('click-left')
+function handleBack() {
+  emit('click-back')
 }
 </script>
 
@@ -78,37 +79,34 @@ function handleLeft() {
   <view :style="navbarStyle">
     <view
       :class="clsx(
-        customClass,
+        'w-screen',
         {
           'fixed top-0 left-0 right-0 z-[9999]': fixed,
         },
+        customClass,
       )"
-      :style="navbarInnerStyle"
+      :style="normalizeStyle([navbarInnerStyle, customStyle])"
     >
-      <view class="h-full relative flex items-center justify-center">
+      <view class="w-full h-full relative flex items-center justify-center">
         <template v-if="showLeft">
           <!-- left -->
           <view
-            class="absolute top-0 bottom-0 flex items-center justify-center left-0 pl-3"
+            class="absolute top-0 bottom-0 flex items-center justify-center left-0"
             :class="leftClass"
-            @click="handleLeft"
+            :style="leftStyle"
           >
             <slot name="left">
-              <view class="h-full flex items-center justify-center relative">
+              <view
+                class="size-8 flex items-center justify-center relative"
+                @click="handleBack"
+              >
                 <text
                   :class="clsx(
                     'iconify text-2xl',
                     pages.length > 1 && 'weui--back-filled',
                     pages.length === 1 && 'weui--home-outlined',
-                    leftArrowClass,
                   )"
                 />
-                <template v-if="leftText">
-                  <text class="ml-0.5">
-                    {{ leftText }}
-                  </text>
-                </template>
-                <text class="size-6 absolute" />
               </view>
             </slot>
           </view>
