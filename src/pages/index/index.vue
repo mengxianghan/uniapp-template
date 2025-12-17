@@ -21,7 +21,7 @@ onTabItemTap(() => {
 </script>
 
 <template>
-  <view class="h-svh flex flex-col items-center">
+  <x-container body-class="flex flex-col items-center">
     <image
       src="/static/logo.svg"
       class="w-[120px]"
@@ -29,7 +29,7 @@ onTabItemTap(() => {
     <view>
       {{ welcome }}
     </view>
-  </view>
+  </x-container>
 </template>
 
 <style lang="scss" scoped>
