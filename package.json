@@ -77,7 +77,8 @@
     "uni-vant-router": "^1.0.4",
     "uni-vant-storage": "^1.0.0",
     "vue": "3.4.21",
-    "vue-i18n": "^9.1.9"
+    "vue-i18n": "^9.1.9",
+    "xy-enum": "^2.1.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "3.16.0",
