@@ -5,8 +5,10 @@ export interface NavBarProps {
   showBack?: boolean
   leftClass?: string
   titleClass?: string
+  rightClass?: string
   fixed?: boolean
   placeholder?: boolean
+  backgroundImage?: string
 }
 
 export interface NavBarEmits {

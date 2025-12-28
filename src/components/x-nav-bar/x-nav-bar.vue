@@ -21,27 +21,49 @@ const pages = getCurrentPages()
 
 const paddingHorizontal = computed(() => {
   const { windowWidth = 0 } = getSystemInfo()
+  let paddingHorizontal = 0
+
+  // #ifdef MP
   const { left, width } = getMenuButtonBoundingClientRect()
-  return windowWidth - left - width
+  paddingHorizontal = windowWidth - left - width
+  // #endif
+
+  // #ifndef MP
+  paddingHorizontal = 12
+  // #endif
+
+  return paddingHorizontal
 })
 
-const navbarHeight = computed<number>(() => {
-  const { statusBarHeight = 0 } = getSystemInfo()
-  const { top, height } = getMenuButtonBoundingClientRect()
-
-  return height + statusBarHeight + (top - statusBarHeight) * 2
+const statusBarHeight = computed(() => {
+  return getSystemInfo().statusBarHeight as number
 })
 
-const navbarStyle = computed(() => {
+const menuBarHeight = computed(() => {
+  let height = 0
+
+  // #ifdef MP
+  const { top: menuButtonTop, height: menuButtonHeight } = getMenuButtonBoundingClientRect()
+  height = menuButtonHeight + (menuButtonTop - statusBarHeight.value) * 2
+  // #endif
+
+  // #ifdef WEB || APP
+  height = 44
+  // #endif
+
+  return height
+})
+
+const navBarHeight = computed<number>(() => menuBarHeight.value + statusBarHeight.value)
+
+const navBarStyle = computed(() => {
   const style: CSSProperties = {}
 
   if (!props.placeholder) {
     return style
   }
 
-  const { statusBarHeight = 0 } = getSystemInfo()
-
-  style.height = `${statusBarHeight + navbarHeight.value}px`
+  style.height = `${navBarHeight.value}px`
 
   return style
 })
@@ -52,7 +74,11 @@ const navbarInnerStyle = computed(() => {
   const { statusBarHeight = 0 } = getSystemInfo()
 
   style.paddingTop = `${statusBarHeight}px`
-  style.height = `${navbarHeight.value}px`
+  style.height = `${navBarHeight.value}px`
+
+  if (props.backgroundImage) {
+    style.background = `url(${props.backgroundImage}) no-repeat center top/100% auto`
+  }
 
   return style
 })
@@ -60,6 +86,13 @@ const navbarInnerStyle = computed(() => {
 const leftStyle = computed(() => {
   const style: CSSProperties = {
     paddingLeft: `${paddingHorizontal.value}px`,
+  }
+
+  return style
+})
+
+const rightStyle = computed(() => {
+  const style: CSSProperties = {
     paddingRight: `${paddingHorizontal.value}px`,
   }
 
@@ -67,8 +100,8 @@ const leftStyle = computed(() => {
 })
 
 const showLeft = computed(() => slots.left || props.showBack)
-
-const showTitle = computed(() => slots.title || props.title)
+const showTitle = computed(() => slots.default || props.title)
+const showRight = computed(() => slots.right)
 
 function handleBack() {
   emit('click-back')
@@ -76,7 +109,7 @@ function handleBack() {
 </script>
 
 <template>
-  <view :style="navbarStyle">
+  <view :style="navBarStyle">
     <view
       :class="clsx(
         'w-screen',
@@ -88,16 +121,16 @@ function handleBack() {
       :style="normalizeStyle([navbarInnerStyle, customStyle])"
     >
       <view class="w-full h-full relative flex items-center justify-center">
+        <!-- 左侧 -->
         <template v-if="showLeft">
-          <!-- left -->
           <view
-            class="absolute top-0 bottom-0 flex items-center justify-center left-0"
+            class="absolute top-0 bottom-0 left-0 z-10 flex items-center justify-center"
             :class="leftClass"
             :style="leftStyle"
           >
             <slot name="left">
               <view
-                class="size-8 flex items-center justify-center relative"
+                class="flex items-center justify-center relative"
                 @click="handleBack"
               >
                 <text
@@ -107,18 +140,29 @@ function handleBack() {
                     pages.length === 1 && 'weui--home-outlined',
                   )"
                 />
+                <text class="size-8 absolute" />
               </view>
             </slot>
           </view>
         </template>
+        <!-- 中间 -->
         <template v-if="showTitle">
           <view
-            class="text-[17px] font-bold text-heading text-center max-w-[60%] mx-auto"
+            class="text-[17px] font-medium text-heading text-center max-w-[60%] mx-auto"
             :class="titleClass"
           >
-            <slot name="title">
+            <slot>
               {{ title }}
             </slot>
+          </view>
+        </template>
+        <!-- 右侧 -->
+        <template v-if="showRight">
+          <view
+            :class="clsx('absolute top-0 bottom-0 right-0 z-10 flex items-center justify-center', rightClass)"
+            :style="rightStyle"
+          >
+            <slot name="right" />
           </view>
         </template>
       </view>
