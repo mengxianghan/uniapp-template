@@ -19,20 +19,21 @@ const slots = useSlots()
 
 const pages = getCurrentPages()
 
-const paddingHorizontal = computed(() => {
+const padding = computed(() => {
   const { windowWidth = 0 } = getSystemInfo()
-  let paddingHorizontal = 0
+  let left = 12
+  let right = 12
 
   // #ifdef MP
-  const { left, width } = getMenuButtonBoundingClientRect()
-  paddingHorizontal = windowWidth - left - width
+  const { left: menuButtonLeft, width } = getMenuButtonBoundingClientRect()
+  left = windowWidth - menuButtonLeft - width
+  right = windowWidth - menuButtonLeft + left
   // #endif
 
-  // #ifndef MP
-  paddingHorizontal = 12
-  // #endif
-
-  return paddingHorizontal
+  return {
+    left,
+    right,
+  }
 })
 
 const statusBarHeight = computed(() => {
@@ -85,7 +86,7 @@ const navbarInnerStyle = computed(() => {
 
 const leftStyle = computed(() => {
   const style: CSSProperties = {
-    paddingLeft: `${paddingHorizontal.value}px`,
+    paddingLeft: `${padding.value?.left}px`,
   }
 
   return style
@@ -93,7 +94,7 @@ const leftStyle = computed(() => {
 
 const rightStyle = computed(() => {
   const style: CSSProperties = {
-    paddingRight: `${paddingHorizontal.value}px`,
+    paddingRight: `${padding.value?.right}px`,
   }
 
   return style
