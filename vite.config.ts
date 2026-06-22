@@ -18,6 +18,12 @@ export default () => {
           tailwindcssPostcssPlugin(),
         ],
       },
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          silenceDeprecations: ['legacy-js-api'],
+        },
+      },
     },
     server,
   })

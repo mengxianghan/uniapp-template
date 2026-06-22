@@ -17,7 +17,8 @@
       "vite/client",
       "@dcloudio/types",
       "miniprogram-api-typings",
-      "@uni-helper/uni-app-types"
+      "@uni-helper/uni-app-types",
+      "@types/node"
     ],
     "sourceMap": true
   },
