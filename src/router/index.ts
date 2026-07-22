@@ -1,6 +1,6 @@
-import type { App } from 'vue'
-import { createRouter, type IRouteRecord } from 'uni-vant-router'
+import { createRouter, type IRouteLocationNormalized, type IRouteRecord } from 'uni-vant-router'
 import pages from '@/pages.json'
+import { useUserStore } from '@/store'
 
 const routes = pages.pages.map((item: IRouteRecord) => ({
   path: `/${item.path}`,
@@ -11,8 +11,27 @@ export const router = createRouter({
   routes,
 })
 
-export function setupRouter(app: App) {
-  app.use(router)
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
 
-  return app
-}
+  // 需要登录 & 未登录
+  if (to.meta?.requiresAuth && !userStore.isLogin) {
+    let openType: IRouteLocationNormalized['openType'] = 'navigateTo'
+
+    if (to.openType === 'reLaunch') {
+      openType = 'reLaunch'
+    }
+
+    if (to.openType === 'switchTab') {
+      openType = 'redirectTo'
+    }
+
+    next({
+      path: '/pages/user/login/index',
+      openType,
+    })
+    return
+  }
+
+  next()
+})

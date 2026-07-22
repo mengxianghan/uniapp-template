@@ -9,7 +9,11 @@ export default <Config>{
     './src/**/*.{html,js,ts,jsx,tsx,vue}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: 'var(--color-primary)',
+      },
+    },
   },
   plugins: [
     rem2px({

@@ -1,5 +1,5 @@
 import { createHttp, type IHttpOptions } from 'uni-vant-http'
-import { config } from '@/configs'
+import { HTTP_CODE_IGNORES, URL_API_BASIC } from '@/constants'
 import { ResponseError } from './exception'
 import { showToast } from './ui'
 
@@ -9,7 +9,7 @@ const options: IHttpOptions = {
   },
   interceptorResponse: (response) => {
     // 错误码处理
-    if (!config.includes('http.code.ignores', response.data.resultStatus)) {
+    if (!HTTP_CODE_IGNORES.includes(response.data.resultStatus)) {
       const errMsg = response.data.message || '系统异常'
       // 延迟显示提示，避免被页面的错误覆盖
       setTimeout(() => {
@@ -26,5 +26,5 @@ const options: IHttpOptions = {
 
 export const basic = createHttp({
   ...options,
-  baseURL: config.get('http.api.basic'),
+  baseURL: URL_API_BASIC,
 })

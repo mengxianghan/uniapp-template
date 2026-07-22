@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { STORAGE_TOKEN, STORAGE_USER_INFO } from '@/constants/storage'
+import { STORAGE_TOKEN, STORAGE_USER_INFO } from '@/constants'
 import { storage } from '@/utils'
 
 interface UserState {

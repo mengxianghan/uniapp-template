@@ -1,11 +1,14 @@
 import { createSSRApp } from 'vue'
-import { useCore } from '@/core'
+import { router } from '@/router'
+import { store } from '@/store'
 import App from './App.vue'
+import '@/styles/index.scss'
 
 export function createApp() {
   const app = createSSRApp(App)
 
-  useCore(app)
+  app.use(router)
+  app.use(store)
 
   return {
     app,
