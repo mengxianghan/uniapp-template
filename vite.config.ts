@@ -1,7 +1,9 @@
 import uni from '@dcloudio/vite-plugin-uni'
 import uniLayouts from '@uni-helper/vite-plugin-uni-layouts'
+import autoprefixer from 'autoprefixer'
+import tailwindcss from 'tailwindcss'
 import { defineConfig } from 'vite'
-import { autoprefixerPostcssPlugin, server, tailwindcssPostcssPlugin, weappTailwindcssPlugin } from './configs'
+import { UnifiedViteWeappTailwindcssPlugin } from 'weapp-tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default () => {
@@ -9,13 +11,13 @@ export default () => {
     plugins: [
       uniLayouts(),
       uni(),
-      weappTailwindcssPlugin(),
+      UnifiedViteWeappTailwindcssPlugin(),
     ],
     css: {
       postcss: {
         plugins: [
-          autoprefixerPostcssPlugin(),
-          tailwindcssPostcssPlugin(),
+          autoprefixer(),
+          tailwindcss(),
         ],
       },
       preprocessorOptions: {
@@ -25,6 +27,8 @@ export default () => {
         },
       },
     },
-    server,
+    server: {
+      host: '0.0.0.0',
+    },
   })
 }
