@@ -17,12 +17,14 @@ async function execute() {
   }
 
   const arr = filename.split('/')
-  // 获取最后一个单词作为组件名
+  // 获取最后一段作为组件名
   const name = arr.pop()
   const kebabCaseName = kebabCase(name)
-  const upperCamelCaseName = upperFirst(camelCase(name))
+  const camelCaseName = camelCase(name)
+  const upperCamelCaseName = upperFirst(camelCaseName)
   // 组件路径，组件都创建在 components 目录下
-  const dirPath = `./src/${arr.join('/')}${arr.length ? '/' : ''}${kebabCaseName}`
+  const dirPath = `./src/${arr.join('/')}/${kebabCaseName}`
+    .replace(/\/{2,}/g, '/')
 
   if (fse.existsSync(dirPath)) {
     consola.error(`${dirPath} 已存在`)
@@ -45,18 +47,19 @@ export * from './common'
     `${dirPath}/common.ts`,
     `export type ${upperCamelCaseName}Instance = InstanceType<typeof import('./${kebabCaseName}.vue')['default']>
 
-export interface ${upperCamelCaseName}Props {
-}
+export interface ${upperCamelCaseName}Props {}
+
+export const default${upperCamelCaseName}Props = \{\}
 
 export interface ${upperCamelCaseName}Slots {
   default: () => void
 }
 
-export interface ${upperCamelCaseName}Emits {
-  (e: 'change'): void
-}
+export interface ${upperCamelCaseName}Emits {}
 
-export const default${upperCamelCaseName}Props = \{\}
+export interface ${upperCamelCaseName}Context {}
+
+export const ContextKey = Symbol('${kebabCaseName}') as InjectionKey<${upperCamelCaseName}Context>
 `,
     'utf8',
   )
@@ -83,9 +86,9 @@ defineEmits<${upperCamelCaseName}Emits>()
 </script>
 
 <template>
-  <view>
+  <div>
     <slot></slot>
-  </view>
+  </div>
 </template>
 
 <style scoped lang="scss">

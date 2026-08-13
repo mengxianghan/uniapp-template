@@ -47,6 +47,7 @@
     "build:prod": "pnpm run build:mp-weixin:prod && pnpm run upload:mp-weixin:prod",
     "create:component": "esno scripts/create-component.ts",
     "create:page": "esno scripts/create-page.ts",
+    "create:store": "esno scripts/create-store.ts",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
