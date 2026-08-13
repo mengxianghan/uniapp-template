@@ -1,7 +1,4 @@
-export interface ModalEmits {
-  (e: 'confirm'): void
-  (e: 'cancel'): void
-}
+export type ModalInstance = InstanceType<typeof import('./x-model.vue')['default']>
 
 export interface ModalProps {
   title?: string
@@ -22,4 +19,9 @@ export const defaultModalProps = {
   cancelButtonText: '取消',
   showConfirmButton: true,
   showCancelButton: true,
+}
+
+export interface ModalEmits {
+  (e: 'confirm'): void
+  (e: 'cancel'): void
 }

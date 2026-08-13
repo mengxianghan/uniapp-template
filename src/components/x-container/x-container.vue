@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ContainerProps } from './common'
+import type { ContainerProps, ContainerSlots } from './common'
 import { computed, type CSSProperties, useSlots } from 'vue'
 import { clsx } from '@/utils'
 import { defaultContainerProps } from './common'
@@ -15,6 +15,8 @@ withDefaults(
   defineProps<ContainerProps>(),
   defaultContainerProps,
 )
+
+defineSlots<ContainerSlots>()
 
 const slots = useSlots()
 

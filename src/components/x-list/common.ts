@@ -1,3 +1,5 @@
+export type ListInstance = InstanceType<typeof import('./list.vue')['default']>
+
 export interface ListProps {
   loading: boolean
   loadingText?: string
@@ -26,4 +28,10 @@ export const defaultListProps = {
 export interface ListEmits {
   (e: 'update:loading', value: boolean): void
   (e: 'update:error', value: boolean): void
+}
+
+export interface ListSlots {
+  default: () => void
+  finished: () => void
+  error: () => void
 }

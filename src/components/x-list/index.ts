@@ -1,1 +1,1 @@
-export type { ListEmits, ListProps } from './common'
+export * from './common'

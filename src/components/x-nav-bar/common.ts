@@ -1,3 +1,5 @@
+export type NavBarInstance = InstanceType<typeof import('./nav-bar.vue')['default']>
+
 export interface NavBarProps {
   customClass?: string | Record<string, any>
   customStyle?: string | Record<string, any>
@@ -10,6 +12,8 @@ export interface NavBarProps {
   placeholder?: boolean
   backgroundImage?: string
 }
+
+export const defaultNavBarProps = {}
 
 export interface NavBarEmits {
   (e: 'click-back'): void

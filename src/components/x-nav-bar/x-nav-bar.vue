@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { NavBarEmits, NavBarProps } from './common'
 import { normalizeStyle } from 'vue'
 import { computed, type CSSProperties, useSlots } from 'vue'
 import { clsx, getMenuButtonBoundingClientRect, getSystemInfo } from '@/utils'
+import { defaultNavBarProps, type NavBarEmits, type NavBarProps } from './common'
 
 defineOptions({
   name: 'XNavBar',
@@ -11,7 +11,10 @@ defineOptions({
   },
 })
 
-const props = defineProps<NavBarProps>()
+const props = withDefaults(
+  defineProps<NavBarProps>(),
+  defaultNavBarProps,
+)
 
 const emit = defineEmits<NavBarEmits>()
 

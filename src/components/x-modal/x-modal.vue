@@ -4,6 +4,13 @@ import { computed, ref, useSlots } from 'vue'
 import { callInterceptor, clsx, isEmpty } from '@/utils'
 import { defaultModalProps } from './common'
 
+defineOptions({
+  name: 'XModal',
+  options: {
+    virtualHost: true,
+  },
+})
+
 const props = withDefaults(
   defineProps<ModalProps>(),
   defaultModalProps,

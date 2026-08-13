@@ -1,8 +1,15 @@
 <script lang="ts" setup>
-import type { ListEmits, ListProps } from './common'
+import type { ListEmits, ListProps, ListSlots } from './common'
 import { nextTick, onMounted, watch } from 'vue'
 import { debounce } from '@/utils'
 import { defaultListProps } from './common'
+
+defineOptions({
+  name: 'XList',
+  options: {
+    virtualHost: true,
+  },
+})
 
 const props = withDefaults(
   defineProps<ListProps>(),
@@ -10,6 +17,8 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<ListEmits>()
+
+defineSlots<ListSlots>()
 
 const windowInfo = uni.getWindowInfo()
 
