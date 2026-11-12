@@ -34,13 +34,13 @@ async function execute() {
   fse.ensureDirSync(dirPath)
 
   // index.ts
-  fse.outputFileSync(
-    `${dirPath}/index.ts`,
-    `export { default as ${upperCamelCaseName} } from './${kebabCaseName}.vue'
-export * from './common'
-`,
-    'utf8',
-  )
+  //   fse.outputFileSync(
+  //     `${dirPath}/index.ts`,
+  //     `export { default as ${upperCamelCaseName} } from './${kebabCaseName}.vue'
+  // export * from './common'
+  // `,
+  //     'utf8',
+  //   )
 
   // common.ts
   fse.outputFileSync(
