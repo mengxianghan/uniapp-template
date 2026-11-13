@@ -26,3 +26,9 @@ export function navigateToUserInfo() {
     path: '/subpackages/user/pages/info/index',
   })
 }
+
+export function navigateToFeedbackTest() {
+  router.navigateTo({
+    path: '/subpackages/user/pages/feedback-test/index',
+  })
+}

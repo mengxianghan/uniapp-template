@@ -45,6 +45,13 @@
           "meta": {
             "requiresAuth": true
           }
+        },
+        {
+          "path": "pages/feedback-test/index",
+          "style": {
+            "navigationBarTitleText": "反馈组件测试",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }
