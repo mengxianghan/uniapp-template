@@ -44,12 +44,14 @@ const fixedStyle = computed(() => {
 const fixedInnerStyle = computed(() => {
   const style: CSSProperties = {}
 
+  // H5 端 --window-top = 导航栏高度，避免被模拟 navbar 遮住；小程序端为 0
   if (props.position === 'top') {
-    style.top = 0
+    style.top = 'var(--window-top, 0px)'
   }
 
+  // H5 端 --window-bottom = tabBar 高度，避免被模拟 tabBar 遮住；无 tabBar 页面为 0
   if (props.position === 'bottom') {
-    style.bottom = 0
+    style.bottom = 'var(--window-bottom, 0px)'
   }
 
   if (props.safeAreaInsetBottom) {
