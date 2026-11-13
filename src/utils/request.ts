@@ -1,7 +1,7 @@
 import { createHttp, type IHttpOptions } from 'uni-vant-http'
 import { HTTP_CODE_IGNORES, URL_API_BASIC } from '@/constants'
 import { ResponseError } from './exception'
-import { showToast } from './ui'
+import { showToast } from './feedback'
 
 const options: IHttpOptions = {
   interceptorRequest: (request) => {
