@@ -16,7 +16,7 @@ async function handleLogin() {
 </script>
 
 <template>
-  <x-container custom-class="flex items-center justify-center">
+  <x-container :classes="{ root: 'flex items-center justify-center' }">
     <view @click="handleLogin">
       登录
     </view>

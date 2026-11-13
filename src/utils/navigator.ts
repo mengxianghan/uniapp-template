@@ -17,12 +17,12 @@ export function switchTabToIndex() {
 
 export function navigateToLogin() {
   router.navigateTo({
-    path: '/pages/user/login/index',
+    path: '/subpackages/user/pages/login/index',
   })
 }
 
 export function navigateToUserInfo() {
   router.navigateTo({
-    path: '/pages/user/info/index',
+    path: '/subpackages/user/pages/info/index',
   })
 }
