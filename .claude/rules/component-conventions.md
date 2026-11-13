@@ -11,7 +11,7 @@
 
 - 只在单个页面/功能内使用的组件，放到该页面目录下的 `components/` 中，不进入 `src/components/`。
 - 私有组件目录同样要求目录名与 `.vue` 文件名一致，便于需要时整体迁移为全局组件。
-- 私有组件可省略 `common.ts` / `index.ts` 三文件结构（单文件即可），但 script 内的类型声明方式（`defineProps<T>` 泛型、`virtualHost` 等）与全局组件保持一致。
+- 私有组件可省略 `common.ts`（单文件即可），但 script 内的类型声明方式（`defineProps<T>` 泛型、`virtualHost` 等）与全局组件保持一致。
 
 ## 命名
 
@@ -19,28 +19,22 @@
 | --- | --- | --- |
 | 目录 / 文件名 | kebab-case，单词用短横线连接 | `x-user-card/`、`x-user-card.vue` |
 | `defineOptions.name` | UpperCamelCase | `XUserCard` |
-| 类型名 | `XxxProps` / `XxxEmits` / `XxxSlots` / `XxxContext` / `XxxInstance`（Xxx 为去掉 `x-` 前缀的 UpperCamel） | `UserCardProps` |
+| 类型名 | `XxxProps` / `XxxEmits` / `XxxSlots` / `XxxContext` / `XxxInstance` / `XxxClassNames` / `XxxStyleNames`（Xxx 为去掉 `x-` 前缀的 UpperCamel） | `UserCardProps` |
 | 默认值对象 | `defaultXxxProps` | `defaultUserCardProps` |
 | 注入键 | `xxxContextKey`（camelCase），值为 `Symbol` 并断言为 `InjectionKey<XxxContext>` | `userCardContextKey` |
 
 支持传带子路径的名称（如 `pnpm create:component business/x-pay`），最后一段为组件名，自动落到 `src/components/business/x-pay/`。
 
-## 目录结构（三文件固定）
+## 目录结构（两文件固定）
 
 ```
 src/components/x-foo/
   x-foo.vue    # 组件本体
   common.ts    # 全部类型定义与默认值
-  index.ts     # 统一出口
 ```
 
-- **`index.ts`**：只包含两行——具名导出组件本体 + 转出 `common`：
-  ```ts
-  export { default as XFoo } from './x-foo.vue'
-  export * from './common'
-  ```
 - **`common.ts`**：组件的 props / emits / slots / provide 类型集中在此，标准导出一组：
-  `XxxInstance`、`XxxProps`、`defaultXxxProps`、`XxxSlots`、`XxxEmits`、`XxxContext`、`xxxContextKey`。
+  `XxxInstance`、`XxxClassNames`、`XxxStyleNames`、`XxxProps`、`defaultXxxProps`、`XxxSlots`、`XxxEmits`、`XxxContext`、`xxxContextKey`。
   不需要的类型（如无跨层级注入）可以省略，但不得在其他文件中重复定义这些类型。
 
 ## 组件本体（x-foo.vue）
@@ -79,7 +73,31 @@ defineEmits<XFooEmits>()
 
 - 始终使用 `<script setup lang="ts">`，props/emits/slots 通过泛型宏声明，**不使用运行时声明**。
 - props 必填项不带 `?`，可选项带 `?`；可选 props 的默认值一律放进 `defaultXxxProps` 对象，不散落在 `withDefaults` 第二个参数里写内联字面量（`defaultXxxProps` 本身是组件文件与 common.ts 之间唯一的默认值来源）。
-- 样式一律 `scoped lang="scss"`；跨端样式用 Tailwind 工具类，类名组合用 `@/utils` 的 `clsx`。
+- 样式一律 `scoped lang="scss"`；跨端样式用 Tailwind 工具类，类名组合用 `@/utils` 的 `cn`。
+
+## 语义化 classes / styles
+
+对齐 antdv-next 规范，类名/样式透传不使用 `custom-class` / `custom-style` 或散落的 `xxxClass` props，统一为语义化对象：
+
+```ts
+import type { CSSProperties } from 'vue'
+
+export type XxxClassNames = 'root' | 'header' | 'body' // classes 可用的语义键
+export type XxxStyleNames = 'root' | 'body' // styles 可用的语义键，与 ClassNames 独立定义、可不同
+
+export interface XxxProps {
+  classes?: Partial<Record<XxxClassNames, string>>
+  styles?: Partial<Record<XxxStyleNames, CSSProperties>>
+}
+```
+
+- 每个组件分别定义 `XxxClassNames` 与 `XxxStyleNames` 两个语义键联合，彼此独立（某个语义部分可以只支持类名不支持样式，反之亦然）。
+- `root` 为必备语义键（组件根节点），其余按键名的语义结构命名，如 `header` / `body` / `left` / `title` / `right` / `content`。
+- 组件内将对应键合并到语义节点：类名用 `@/utils` 的 `cn` 合并，样式用 vue 的 `normalizeStyle` 或与计算样式组成数组绑定：
+  ```vue
+  <view :class="cn('relative', classes?.root)" :style="styles?.root">
+  <view :style="normalizeStyle([innerStyle, styles?.root])">
+  ```
 
 ## 注册与使用
 

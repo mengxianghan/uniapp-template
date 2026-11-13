@@ -44,18 +44,23 @@ Git 提交遵循 conventional commits（commitlint + husky + lint-staged 在提�
 
 ### 路由：pages.json 是唯一路由源
 
-`src/router/index.ts` 从 `src/pages.json` 生成路由表（`uni-vant-router`），不手写路由配置。页面访问控制通过在 `pages.json` 的页面配置中加 `meta.requiresAuth: true` 实现，路由守卫（`router.beforeEach`）会重定向到登录页。新增页面用 `pnpm create:page` 生成（如 `create:page pages/user/info` 或分包 `create:page subpackages/shop/goods-list`），脚手架只生成 `.vue` 文件，创建后需手动注册到 `src/pages.json`。
+`src/router/index.ts` 从 `src/pages.json` 生成路由表（`uni-vant-router`），不手写路由配置。页面访问控制通过在 `pages.json` 的页面配置中加 `meta.requiresAuth: true` 实现，路由守卫（`router.beforeEach`）会重定向到登录页。新增页面用 `pnpm create:page` 生成（如 `create:page pages/user/index` 或分包 `create:page subpackages/shop/pages/goods-list`），脚手架只生成 `.vue` 文件，创建后需手动注册到 `src/pages.json`。
 
-### 组件约定：x-* 组件的三文件结构
+### 分包：按模块组织，镜像主包结构
+
+`src/pages/` 只保留 tabBar 页面；其余页面按业务模块放入 `src/subpackages/<模块>/`，模块内目录结构镜像主包：`pages/`、`apis/`、`utils/`、`store/`、`constants/`（模块私有代码放子包，跨模块共享的先上提到主包对应目录；子包 store 不进主包桶文件）。路由与 meta 由 `src/router/index.ts` 合并 `pages` + `subPackages` 自动生成（详见 `.claude/rules/subpackage-conventions.md`）。
+
+### 组件约定：x-* 组件的两文件结构
 
 `src/components/` 下的自定义组件遵循固定结构（`pnpm create:component` 会自动生成）：
 
 ```
 src/components/x-foo/
   x-foo.vue   # <script setup>，defineOptions({ name: 'XFoo', options: { virtualHost: true } })
-  common.ts   # FooProps / defaultFooProps / FooEmits / FooSlots / FooInstance 类型
-  index.ts    # export { default as XFoo } from './x-foo.vue'; export * from './common'
+  common.ts   # FooProps / defaultFooProps / FooEmits / FooSlots / FooInstance / FooClassNames / FooStyleNames 类型
 ```
+
+类名/样式透传对齐 antdv-next 语义化约定：`classes?: Partial<Record<XxxClassNames, string>>` 与 `styles?: Partial<Record<XxxStyleNames, CSSProperties>>`，两个语义键联合独立定义，组件内用 `@/utils` 的 `cn` / vue 的 `normalizeStyle` 合并（详见 `.claude/rules/component-conventions.md`）。
 
 组件通过 pages.json 的 easycom `autoscan` 自动注册（`wd-*` 前缀映射到 Wot UI），无需手动 import。
 

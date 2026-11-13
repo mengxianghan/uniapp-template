@@ -9,6 +9,7 @@
 - 文件名 kebab-case，多个单词用短横线连接；脚手架自动转换命名：
   - 导出函数：`use<UpperCamel>Store`，如 `useUserStore`
   - store id：camelCase，与文件名一致，如 `defineStore('userCard', ...)`
+- **子包私有 store 例外**：放在 `src/subpackages/<模块>/store/` 下，**不注册**主包 `src/store/index.ts` 桶文件（主包桶引用子包代码会把子包代码打进主包，导致分包失效）；由子包页面直接 import（相对路径或 `@/subpackages/<模块>/store/xxx`）。全局共享 store 仍在 `src/store/` 并照常注册（见分包规范）。
 
 ## 写法风格
 
