@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ModalEmits, ModalProps } from './common'
 import { computed, ref, useSlots } from 'vue'
-import { callInterceptor, clsx, isEmpty } from '@/utils'
+import { callInterceptor, cn, isEmpty } from '@/utils'
 import { defaultModalProps } from './common'
 
 defineOptions({
@@ -85,10 +85,11 @@ defineExpose({
     :close-on-click-modal="false"
   >
     <view
-      :class="clsx(
+      :class="cn(
         'bg-[linear-gradient(164deg,#DDE8FF_0%,#F0F3F9_27%,#FFFFFF_100%)] w-[300px] rounded-xl relative overflow-hidden shadow-[0px_2px_12px_0px_rgba(44,44,44,0.24)]',
-        state?.customClass,
+        state?.classes?.root,
       )"
+      :style="state?.styles?.root"
     >
       <!-- 关闭按钮 -->
       <template v-if="showClose">
@@ -103,7 +104,7 @@ defineExpose({
         <!-- 标题 -->
         <template v-if="showTitle">
           <view
-            :class="clsx(
+            :class="cn(
               'text-base font-medium text-center pt-6',
               showClose && 'pt-8',
               !showContent && showButton && 'pb-6',
@@ -117,7 +118,7 @@ defineExpose({
         <!-- 内容 -->
         <template v-if="showContent">
           <view
-            :class="clsx(
+            :class="cn(
               'text-sm text-center px-5 pt-3 pb-7',
               !showTitle && 'py-6',
               showClose && !showTitle && 'pt-8',

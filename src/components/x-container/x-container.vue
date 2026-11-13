@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ContainerProps, ContainerSlots } from './common'
 import { computed, type CSSProperties, useSlots } from 'vue'
-import { clsx } from '@/utils'
+import { cn, getWindowInfo } from '@/utils'
 import { defaultContainerProps } from './common'
 
 defineOptions({
@@ -23,7 +23,7 @@ const slots = useSlots()
 const rootStyle = computed(() => {
   const style: CSSProperties = {}
 
-  const { windowHeight } = uni.getSystemInfoSync()
+  const { windowHeight } = getWindowInfo()
 
   style.minHeight = `${windowHeight}px`
 
@@ -33,11 +33,11 @@ const rootStyle = computed(() => {
 
 <template>
   <view
-    :class="clsx(
+    :class="cn(
       'relative',
-      customClass,
+      classes?.root,
     )"
-    :style="rootStyle"
+    :style="[rootStyle, styles?.root]"
   >
     <!-- 背景图 -->
     <image
@@ -49,6 +49,8 @@ const rootStyle = computed(() => {
     <view
       v-if="slots.header"
       class="z-[9999] relative"
+      :class="classes?.header"
+      :style="styles?.header"
     >
       <slot
         name="header"
@@ -57,10 +59,11 @@ const rootStyle = computed(() => {
     </view>
 
     <view
-      :class="clsx(
+      :class="cn(
         'z-10 relative',
-        bodyClass,
+        classes?.body,
       )"
+      :style="styles?.body"
     >
       <slot />
     </view>

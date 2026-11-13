@@ -21,7 +21,7 @@ onTabItemTap(() => {
 </script>
 
 <template>
-  <x-container body-class="flex flex-col items-center">
+  <x-container :classes="{ body: 'flex flex-col items-center' }">
     <image
       src="/static/logo.svg"
       class="w-[120px]"

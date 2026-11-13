@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { normalizeStyle } from 'vue'
 import { computed, type CSSProperties, useSlots } from 'vue'
-import { clsx, getMenuButtonBoundingClientRect, getSystemInfo } from '@/utils'
+import { cn, getMenuButtonBoundingClientRect, getWindowInfo } from '@/utils'
 import { defaultNavBarProps, type NavBarEmits, type NavBarProps } from './common'
 
 defineOptions({
@@ -23,7 +23,7 @@ const slots = useSlots()
 const pages = getCurrentPages()
 
 const padding = computed(() => {
-  const { windowWidth = 0 } = getSystemInfo()
+  const { windowWidth = 0 } = getWindowInfo()
   let left = 12
   let right = 12
 
@@ -40,7 +40,7 @@ const padding = computed(() => {
 })
 
 const statusBarHeight = computed(() => {
-  return getSystemInfo().statusBarHeight as number
+  return getWindowInfo().statusBarHeight
 })
 
 const menuBarHeight = computed(() => {
@@ -75,7 +75,7 @@ const navBarStyle = computed(() => {
 const navbarInnerStyle = computed(() => {
   const style: CSSProperties = {}
 
-  const { statusBarHeight = 0 } = getSystemInfo()
+  const { statusBarHeight = 0 } = getWindowInfo()
 
   style.paddingTop = `${statusBarHeight}px`
   style.height = `${navBarHeight.value}px`
@@ -115,21 +115,21 @@ function handleBack() {
 <template>
   <view :style="navBarStyle">
     <view
-      :class="clsx(
+      :class="cn(
         'w-screen',
         {
           'fixed top-0 left-0 right-0 z-[9999]': fixed,
         },
-        customClass,
+        classes?.root,
       )"
-      :style="normalizeStyle([navbarInnerStyle, customStyle])"
+      :style="normalizeStyle([navbarInnerStyle, styles?.root])"
     >
       <view class="w-full h-full relative flex items-center justify-center">
         <!-- 左侧 -->
         <template v-if="showLeft">
           <view
             class="absolute top-0 bottom-0 left-0 z-10 flex items-center justify-center"
-            :class="leftClass"
+            :class="classes?.left"
             :style="leftStyle"
           >
             <slot name="left">
@@ -138,7 +138,7 @@ function handleBack() {
                 @click="handleBack"
               >
                 <text
-                  :class="clsx(
+                  :class="cn(
                     'iconify text-2xl',
                     pages.length > 1 && 'weui--back-filled',
                     pages.length === 1 && 'weui--home-outlined',
@@ -153,7 +153,7 @@ function handleBack() {
         <template v-if="showTitle">
           <view
             class="text-[17px] font-medium text-heading text-center max-w-[60%] mx-auto"
-            :class="titleClass"
+            :class="classes?.title"
           >
             <slot>
               {{ title }}
@@ -163,7 +163,7 @@ function handleBack() {
         <!-- 右侧 -->
         <template v-if="showRight">
           <view
-            :class="clsx('absolute top-0 bottom-0 right-0 z-10 flex items-center justify-center', rightClass)"
+            :class="cn('absolute top-0 bottom-0 right-0 z-10 flex items-center justify-center', classes?.right)"
             :style="rightStyle"
           >
             <slot name="right" />

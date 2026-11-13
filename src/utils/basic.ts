@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import { normalizeClass } from 'vue'
 
-export const clsx = (...args: unknown[]) => twMerge(normalizeClass(args))
+export const cn = (...args: unknown[]) => twMerge(normalizeClass(args))
 
 export function debounce(func: (...args: any[]) => any, wait: number) {
   let timeout: ReturnType<typeof setTimeout> | null

@@ -1,4 +1,10 @@
-export type ListInstance = InstanceType<typeof import('./list.vue')['default']>
+import type { CSSProperties } from 'vue'
+
+export type ListInstance = InstanceType<typeof import('./x-list.vue')['default']>
+
+export type ListClassNames = 'root' | 'content' | 'loadingText' | 'finishedText' | 'errorText'
+
+export type ListStyleNames = 'root' | 'content'
 
 export interface ListProps {
   loading: boolean
@@ -13,8 +19,8 @@ export interface ListProps {
   loadData: () => void
   container: string
   offset?: number
-  customClass?: string | string[] | Record<string, boolean>
-  customStyle?: string | Record<string, string>
+  classes?: Partial<Record<ListClassNames, string>>
+  styles?: Partial<Record<ListStyleNames, CSSProperties>>
 }
 
 export const defaultListProps = {

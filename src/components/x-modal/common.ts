@@ -1,4 +1,10 @@
-export type ModalInstance = InstanceType<typeof import('./x-model.vue')['default']>
+import type { CSSProperties } from 'vue'
+
+export type ModalInstance = InstanceType<typeof import('./x-modal.vue')['default']>
+
+export type ModalClassNames = 'root'
+
+export type ModalStyleNames = 'root'
 
 export interface ModalProps {
   title?: string
@@ -10,7 +16,8 @@ export interface ModalProps {
   onConfirm?: () => void
   onCancel?: () => void
   closeable?: boolean
-  customClass?: string
+  classes?: Partial<Record<ModalClassNames, string>>
+  styles?: Partial<Record<ModalStyleNames, CSSProperties>>
   beforeClose?: () => Promise<boolean>
 }
 

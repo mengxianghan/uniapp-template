@@ -33,22 +33,20 @@ async function execute() {
 
   fse.ensureDirSync(dirPath)
 
-  // index.ts
-  //   fse.outputFileSync(
-  //     `${dirPath}/index.ts`,
-  //     `export { default as ${upperCamelCaseName} } from './${kebabCaseName}.vue'
-  // export * from './common'
-  // `,
-  //     'utf8',
-  //   )
-
   // common.ts
   fse.outputFileSync(
     `${dirPath}/common.ts`,
-    `import type { InjectionKey } from 'vue'
+    `import type { CSSProperties, InjectionKey } from 'vue'
 export type ${upperCamelCaseName}Instance = InstanceType<typeof import('./${kebabCaseName}.vue')['default']>
 
-export interface ${upperCamelCaseName}Props {}
+export type ${upperCamelCaseName}ClassNames = 'root'
+
+export type ${upperCamelCaseName}StyleNames = 'root'
+
+export interface ${upperCamelCaseName}Props {
+  classes?: Partial<Record<${upperCamelCaseName}ClassNames, string>>
+  styles?: Partial<Record<${upperCamelCaseName}StyleNames, CSSProperties>>
+}
 
 export const default${upperCamelCaseName}Props = \{\}
 
@@ -73,6 +71,7 @@ export const ${camelCaseName}ContextKey = Symbol('${kebabCaseName}') as Injectio
     `<script setup lang="ts">
 import type { ${upperCamelCaseName}Props, ${upperCamelCaseName}Slots, ${upperCamelCaseName}Emits, ${upperCamelCaseName}Context } from './common'
 import { default${upperCamelCaseName}Props,  ${camelCaseName}ContextKey} from './common'
+import { cn } from '@/utils'
 import { reactive, provide } from 'vue'
 
 defineOptions({
@@ -98,9 +97,12 @@ provide<${upperCamelCaseName}Context>(
 </script>
 
 <template>
-  <div>
+  <view
+    :class="cn(classes?.root)"
+    :style="styles?.root"
+  >
     <slot></slot>
-  </div>
+  </view>
 </template>
 
 <style scoped lang="scss">

@@ -1,8 +1,14 @@
-export type ContainerInstance = InstanceType<typeof import('./index.vue')['default']>
+import type { CSSProperties } from 'vue'
+
+export type ContainerInstance = InstanceType<typeof import('./x-container.vue')['default']>
+
+export type ContainerClassNames = 'root' | 'header' | 'body'
+
+export type ContainerStyleNames = 'root' | 'header' | 'body'
 
 export interface ContainerProps {
-  customClass?: string
-  bodyClass?: string
+  classes?: Partial<Record<ContainerClassNames, string>>
+  styles?: Partial<Record<ContainerStyleNames, CSSProperties>>
   backgroundImage?: string
   hasNavBar?: boolean
   hasTabBar?: boolean

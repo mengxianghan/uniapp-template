@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ListEmits, ListProps, ListSlots } from './common'
 import { nextTick, onMounted, watch } from 'vue'
-import { debounce } from '@/utils'
+import { cn, debounce, getWindowInfo } from '@/utils'
 import { defaultListProps } from './common'
 
 defineOptions({
@@ -20,7 +20,7 @@ const emit = defineEmits<ListEmits>()
 
 defineSlots<ListSlots>()
 
-const windowInfo = uni.getWindowInfo()
+const windowInfo = getWindowInfo()
 
 watch(() => [
   props.finished,
@@ -91,15 +91,23 @@ defineExpose({
 <template>
   <view
     class="x-list"
-    :class="props.customClass"
-    :style="props.customStyle"
+    :class="cn(
+      'x-list',
+      props.classes?.root,
+    )"
+    :style="props.styles?.root"
   >
-    <view class="x-list__content">
+    <view
+      class="x-list__content"
+      :class="props.classes?.content"
+      :style="props.styles?.content"
+    >
       <slot />
     </view>
     <template v-if="error">
       <view
         class="x-list__error-text"
+        :class="props.classes?.errorText"
         @click="handleErrorText"
       >
         <slot name="error">
@@ -108,7 +116,10 @@ defineExpose({
       </view>
     </template>
     <template v-if="finished">
-      <view class="x-list__finished-text">
+      <view
+        class="x-list__finished-text"
+        :class="props.classes?.finishedText"
+      >
         <template v-if="useFinishedSlot">
           <slot name="finished">
             {{ finishedText }}
@@ -120,7 +131,10 @@ defineExpose({
       </view>
     </template>
     <template v-if="loading">
-      <view class="x-list__loading-text">
+      <view
+        class="x-list__loading-text"
+        :class="props.classes?.loadingText"
+      >
         <slot name="loading">
           {{ loadingText }}
         </slot>
