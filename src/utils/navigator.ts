@@ -15,6 +15,12 @@ export function switchTabToIndex() {
   })
 }
 
+export function navigateTo(path: string) {
+  router.navigateTo({
+    path,
+  })
+}
+
 export function navigateToLogin() {
   router.navigateTo({
     path: '/subpackages/user/pages/login/index',
@@ -30,5 +36,11 @@ export function navigateToUserInfo() {
 export function navigateToFeedbackTest() {
   router.navigateTo({
     path: '/subpackages/user/pages/feedback-test/index',
+  })
+}
+
+export function navigateToContainerTest() {
+  router.navigateTo({
+    path: '/subpackages/user/pages/container-test/index',
   })
 }

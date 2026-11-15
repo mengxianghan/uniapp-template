@@ -1,5 +1,6 @@
 export * from './app'
 export * from './basic'
+export * from './cn'
 export { emitter } from './event-bus'
 export * from './exception'
 export * from './feedback'

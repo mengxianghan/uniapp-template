@@ -52,6 +52,48 @@
             "navigationBarTitleText": "反馈组件测试",
             "enablePullDownRefresh": false
           }
+        },
+        {
+          "path": "pages/container-test/index",
+          "style": {
+            "navigationBarTitleText": "Container 测试",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/container-test/default/index",
+          "style": {
+            "navigationBarTitleText": "Container-默认模式",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/container-test/fixed-footer/index",
+          "style": {
+            "navigationBarTitleText": "Container-固定高度+footer",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/container-test/fixed-overflow/index",
+          "style": {
+            "navigationBarTitleText": "Container-溢出滚动",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/container-test/header-bg/index",
+          "style": {
+            "navigationBarTitleText": "Container-header+背景图",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/container-test/classes-styles/index",
+          "style": {
+            "navigationBarTitleText": "Container-类名样式透传",
+            "enablePullDownRefresh": false
+          }
         }
       ]
     }

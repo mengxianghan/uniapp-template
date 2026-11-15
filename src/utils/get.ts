@@ -1,16 +1,9 @@
 /**
  * 获取窗口信息
  */
-export const getWindowInfo = (() => {
-  let windowInfo: UniApp.GetWindowInfoResult | null = null
-
-  return () => {
-    if (!windowInfo) {
-      windowInfo = uni.getWindowInfo()
-    }
-    return windowInfo
-  }
-})()
+export function getWindowInfo(): UniApp.GetWindowInfoResult {
+  return uni.getWindowInfo()
+}
 
 /**
  * 获取胶囊按钮信息

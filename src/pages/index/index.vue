@@ -3,7 +3,7 @@ import type { OnAppReadyCallbackOption } from '@/types/app'
 import { onShow, onTabItemTap } from '@dcloudio/uni-app'
 import { useRouter } from 'uni-vant-router'
 import { ref } from 'vue'
-import { navigateToFeedbackTest, onAppReady } from '@/utils'
+import { navigateToContainerTest, navigateToFeedbackTest, onAppReady } from '@/utils'
 
 const router = useRouter()
 
@@ -35,6 +35,12 @@ onTabItemTap(() => {
       @click="navigateToFeedbackTest"
     >
       反馈组件样式测试
+    </wd-button>
+    <wd-button
+      class="mt-6"
+      @click="navigateToContainerTest"
+    >
+      Container 组件测试
     </wd-button>
   </x-container>
 </template>
