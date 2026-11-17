@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { ContainerProps, ContainerSlots } from './common'
-import { computed, type CSSProperties, useSlots } from 'vue'
-import pagesJson from '@/pages.json'
-import { cn, getWindowInfo } from '@/utils'
+import { useSlots } from 'vue'
+import { cn } from '@/utils'
 import { defaultContainerProps } from './common'
 
 defineOptions({
@@ -20,52 +19,17 @@ const props = withDefaults(
 defineSlots<ContainerSlots>()
 
 const slots = useSlots()
-
-// uni-app H5 的 --window-bottom 全局生效（恒等于 tabBar 高度），与当前页面是否有 tabBar 无关，需按当前路由判断
-const tabBarPaths = (pagesJson.tabBar?.list ?? []).map((item: { pagePath: string }) => `/${item.pagePath}`)
-
-function isTabBarPage() {
-  const pages = getCurrentPages()
-  const current = pages[pages.length - 1]
-  return current ? tabBarPaths.includes(`/${current.route}`) : false
-}
-
-const rootStyle = computed(() => {
-  const style: CSSProperties = {}
-  const { windowHeight } = getWindowInfo()
-
-  let height = ''
-
-  // H5 端 windowHeight 包含模拟导航栏/tabBar，需扣除；小程序端 windowHeight 已是可视高度
-  // #ifdef H5
-  const tabBarHeight = isTabBarPage() ? ' - var(--window-bottom, 0px)' : ''
-  height = `calc(${windowHeight}px - var(--window-top, 0px)${tabBarHeight})`
-  // #endif
-
-  // #ifndef H5
-  height = `${windowHeight}px`
-  // #endif
-
-  if (props.fixedHeight) {
-    style.height = height
-  }
-  else {
-    style.minHeight = height
-  }
-
-  return style
-})
 </script>
 
 <template>
   <view
     :class="cn(
-      'relative',
-      props.fixedHeight && 'overflow-hidden',
+      'relative x-container-root',
+      props.fixedHeight && 'x-container-root--fixed-height overflow-hidden',
       slots.footer && 'flex flex-col',
       classes?.root,
     )"
-    :style="[rootStyle, styles?.root]"
+    :style="styles?.root"
   >
     <!-- 背景图 -->
     <image
@@ -100,15 +64,30 @@ const rootStyle = computed(() => {
 
     <view
       v-if="slots.footer"
-      class="z-10 relative"
+      class="relative"
       :class="classes?.footer"
       :style="styles?.footer"
     >
       <slot name="footer" />
     </view>
+
+    <!-- 底部安全区占位 -->
+    <x-safe-area v-if="props.safeAreaBottom" />
   </view>
 </template>
 
 <style scoped lang="scss">
+// 高度基准 = 可视窗口 - 导航栏占位（--window-top）- tabBar 占位（--window-bottom）
+// H5 端由 uni-app 注入这两个变量；小程序端 vh 本身已排除导航栏/tabBar，变量为 0
+// 100dvh 为 H5 移动端浏览器回退（地址栏动态收缩），小程序端忽略不认识的声明
+.x-container-root {
+  min-height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
+  min-height: calc(100dvh - var(--window-top, 0px) - var(--window-bottom, 0px));
 
+  &--fixed-height {
+    min-height: 0;
+    height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
+    height: calc(100dvh - var(--window-top, 0px) - var(--window-bottom, 0px));
+  }
+}
 </style>

@@ -15,10 +15,16 @@ export interface ContainerProps {
    * body 撑满剩余空间、footer 贴底；默认 false，使用 min-height 至少占满一屏。
    */
   fixedHeight?: boolean
+  /**
+   * 是否在容器最底部渲染底部安全区占位（env(safe-area-inset-bottom)）。
+   * 默认 false；有 footer 时安全区渲染在 footer 之后。
+   */
+  safeAreaBottom?: boolean
 }
 
 export const defaultContainerProps = {
   fixedHeight: false,
+  safeAreaBottom: false,
 }
 
 export interface ContainerSlots {
