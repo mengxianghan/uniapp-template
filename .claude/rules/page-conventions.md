@@ -54,7 +54,8 @@
 ## 页面内的组织
 
 - 仅本页使用的私有组件放在页面目录下的 `components/` 子目录，不带 `x-` 前缀，显式 import（见组件规范）。
-- 登录态、用户信息从 `@/store` 读取；接口请求走 `@/utils` 的 `request` 实例；跳转用 `@/utils` 的导航封装，不直接调 `uni.navigateTo` 等原始 API。
+- 登录态、用户信息从 `@/store` 读取；接口请求走 `@/utils` 的 `request` 实例。
+- **页面跳转统一走页面级导航方法**（定义在 `src/utils/navigator.ts`，经 `@/utils` 桶导出）：每个目标页面一个独立导出函数，参数统一为 query 对象（可选字段、便于扩展），如 `navigateToUserInfo({ id })`，内部直接调 `router.navigateTo({ path, query })`（`@/router` 的 uni-vant-router 实例原生支持 query 对象，值可为 string / number / 数组，由 router 拼 querystring）。页面内**不内联** `navigateTo`、不出现路由路径字符串、不自定义 `openXxx` 包装方法，也不直接调 `uni.navigateTo` 等原始 API。新增页面时在 `navigator.ts` 补对应方法（小程序 `onShareAppMessage` 的分享 path 除外，它必须是路径字符串）。
 - 页面路径引用静态资源用 `/static/...` 绝对路径（如 tabBar 图标）。
 
 ## 其他

@@ -1,6 +1,6 @@
 # 组件开发规范
 
-本规范由 `scripts/create-component.ts` 脚手架和 `src/components/` 现有组件（x-list、x-modal、x-nav-bar、x-container）共同约定。**新增组件一律使用 `pnpm create:component <name>` 生成骨架，不要手写目录结构。**
+本规范由 `scripts/create-component.ts` 脚手架和 `src/components/` 现有组件（x-list、x-modal、x-nav-bar、x-container）共同约定。**新增组件（不管是全局组件还是私有组件）一律使用 `pnpm create:component <name>` 生成骨架，不要手写目录结构。**
 
 ## 组件的两种归属
 
@@ -11,7 +11,7 @@
 
 - 只在单个页面/功能内使用的组件，放到该页面目录下的 `components/` 中，不进入 `src/components/`。
 - 私有组件目录同样要求目录名与 `.vue` 文件名一致，便于需要时整体迁移为全局组件。
-- 私有组件可省略 `common.ts`（单文件即可），但 script 内的类型声明方式（`defineProps<T>` 泛型、`virtualHost` 等）与全局组件保持一致。
+- 私有组件同样用 `pnpm create:component` 生成，参数传完整路径前缀（如 `pnpm create:component subpackages/user/pages/info/components/pay-panel`），脚手架按最后一段组件名落盘，生成不带 `x-` 前缀的两文件结构；script 内的类型声明方式（`defineProps<T>` 泛型、`virtualHost` 等）与全局组件保持一致。
 
 ## 命名
 
@@ -36,6 +36,7 @@ src/components/x-foo/
 - **`common.ts`**：组件的 props / emits / slots / provide 类型集中在此，标准导出一组：
   `XxxInstance`、`XxxClassNames`、`XxxStyleNames`、`XxxProps`、`defaultXxxProps`、`XxxSlots`、`XxxEmits`、`XxxContext`、`xxxContextKey`。
   不需要的类型（如无跨层级注入）可以省略，但不得在其他文件中重复定义这些类型。
+- 私有组件由脚手架生成同样的两文件结构；生成后如确实用不到 `common.ts`（无对外类型、无语义键）可删除简化为单文件，但生成必须走脚手架，不手写文件。
 
 ## 组件本体（x-foo.vue）
 
@@ -138,6 +139,7 @@ export interface XxxProps {
 - 允许在模板中直接使用 `$attrs`（如透传到内部元素 `<view v-bind="$attrs">`），也允许在 script 中用 `useAttrs()` 取到，两者均可。
 - 组件默认开启属性透传（`inheritAttrs: true`），不强制关闭；仅当根元素不是实际渲染节点（如多根节点、根节点需要保留给 wrapper）时，才在 `defineOptions` 中按需设置 `inheritAttrs: false` 并显式 `v-bind="$attrs"`。
 - 透传属性不要再声明为 props，避免重复定义。
+- **class / style 不透传 `$attrs`**：组件需要对外提供类名/样式定制能力时，必须显式声明 `classes` / `styles` 语义化 props（见「语义化 classes / styles」一节），在根节点用 `cn(classes?.root)` / `styles?.root` 合并；禁止靠 `$attrs` 的 class/style 自动 fallthrough 作为样式定制入口（`$attrs` 仅用于事件、id、`data-*` 等其余属性的透传）。
 
 ## Provide / Inject
 
